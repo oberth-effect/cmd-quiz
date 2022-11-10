@@ -4,7 +4,7 @@ import tkinter as tk
 from test_logic import Quizzer
 
 
-class MainWindow:
+class App:
     title = "MS_DOS Test App"
 
     window: tk.Tk

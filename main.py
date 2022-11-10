@@ -1,7 +1,7 @@
 import pathlib
 import yaml
 
-from cli_interface import App
+from graphical_interface import App
 from test_logic import Quizzer, Question
 
 
