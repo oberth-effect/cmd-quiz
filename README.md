@@ -2,6 +2,8 @@
 
 Build the executable:
 ```console
+pip install -r requirements.txt
+pip install pyinstaller
 pyinstaller --onefile --icon=cmd.ico cmd_quiz.py
 ```
 
