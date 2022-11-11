@@ -1,20 +1,18 @@
 import pathlib
 import yaml
 
-from cli_interface import App, Error
-from test_logic import Quizzer, Question, QuestionGroup
-
-ROOT_PATH = pathlib.Path(__file__).parent
+from .cli_interface import App, Error
+from .quiz_logic import Quizzer, Question, QuestionGroup
 
 QUESTION_FILE_LOOKUP_LOCATIONS = [
-    ROOT_PATH / 'questions',
-    ROOT_PATH / 'data/questions',
+    'questions',
+    'data/questions',
 ]
 
 SUPPORTED_FORMATS = ['yml', 'yaml']
 
 
-def parse_question_file_yaml(pth: pathlib.Path) -> list[QuestionGroup]:
+def _parse_question_file_yaml(pth: pathlib.Path) -> list[QuestionGroup]:
     """Parser for yaml question file"""
     with open(pth, 'r') as f:
         raw_data = yaml.safe_load(f)
@@ -22,8 +20,12 @@ def parse_question_file_yaml(pth: pathlib.Path) -> list[QuestionGroup]:
                 raw_data.items()]
 
 
-def find_question_file() -> pathlib.Path:
-    for p in QUESTION_FILE_LOOKUP_LOCATIONS:
+def _get_loc_list(root_pth: pathlib.Path):
+    return [root_pth / loc for loc in QUESTION_FILE_LOOKUP_LOCATIONS]
+
+
+def _find_question_file(root_pth: pathlib.Path) -> pathlib.Path:
+    for p in _get_loc_list(root_pth):
         for fmt in SUPPORTED_FORMATS:
             pth = p.parent / f"{p.name}.{fmt}"
             print(pth)
@@ -32,10 +34,10 @@ def find_question_file() -> pathlib.Path:
     raise RuntimeError("No datafile found.")
 
 
-if __name__ == "__main__":
+def run_cli_app(root_path: pathlib.Path | str):
     try:
-        qf = find_question_file()
-        quiz = Quizzer(parse_question_file_yaml(qf))
+        qf = _find_question_file(pathlib.Path(root_path))
+        quiz = Quizzer(_parse_question_file_yaml(qf))
         app = App(quiz)
         app.run()
     except Exception as e:

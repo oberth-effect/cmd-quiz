@@ -7,7 +7,7 @@ Error - display error messages
 import time
 import os
 
-from test_logic import Quizzer
+from .quiz_logic import Quizzer
 
 
 class _GUIElements:
