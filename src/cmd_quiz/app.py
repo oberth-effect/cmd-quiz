@@ -25,13 +25,15 @@ def _get_loc_list(root_pth: pathlib.Path):
 
 
 def _find_question_file(root_pth: pathlib.Path) -> pathlib.Path:
+    att_loc = []
     for p in _get_loc_list(root_pth):
         for fmt in SUPPORTED_FORMATS:
             pth = p.parent / f"{p.name}.{fmt}"
-            print(pth)
+            att_loc.append(pth)
             if pth.is_file():
                 return pth
-    raise RuntimeError("No datafile found.")
+    loc_print = '\n'.join(map(str, att_loc))
+    raise RuntimeError(f"No datafile found. Searched:\n{loc_print}")
 
 
 def run_cli_app(root_path: pathlib.Path | str):
