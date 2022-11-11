@@ -73,7 +73,7 @@ class App(_GUIElements):
         pts = self.quiz.pts
         p1, p2 = self.quiz.progress
         self._print_line()
-        print(f"| Otázka: {p1 / p2}     Zbývající pokusy: {q.attempts_remaining}     Body: {pts} |")
+        print(f"| Otázka: {p1}/{p2}     Zbývající pokusy: {q.attempts_remaining}     Body: {pts} |")
         self._print_line()
 
     def _ask_question(self):
